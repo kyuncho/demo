@@ -1,0 +1,27 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: demo
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: demo
+      labels:
+        app: demo
+    spec:
+      containers:
+      - image: kyuncho/demo-image:v1
+        name: nodejs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo
+spec:
+  type: LoadBalancer
+  selector:
+    app: demo
+  ports:
+  - port: 80
+    targetPort: 8080
